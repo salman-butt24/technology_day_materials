@@ -1,4 +1,4 @@
-# https://github.com/lingthio/Flask-User
+# Source: https://github.com/lingthio/Flask-User
 # This file contains an example Flask-User application.
 # To keep the example simple, we are applying some unusual techniques:
 # - Placing everything in one file
