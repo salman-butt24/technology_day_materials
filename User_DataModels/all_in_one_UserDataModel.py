@@ -1,4 +1,6 @@
 # All in One User DataModel
+# Stores all user information in one DataModel
+
 # Define User model. Make sure to add flask_user UserMixin !!!
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
