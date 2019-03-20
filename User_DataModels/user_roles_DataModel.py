@@ -1,4 +1,8 @@
 # User Roles DataModel
+# The UserRoles DataModel associates Users with their Roles
+# The Roles table holds the name of each role. This name will be matched
+# to the @roles_required function decorator in a case sensitive manner.
+
 # Define the Role DataModel
 class Role(db.Model):
     id = db.Column(db.Integer(), primary_key=True)

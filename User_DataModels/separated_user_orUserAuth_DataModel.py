@@ -1,4 +1,6 @@
 # Separated User/UserAuth DataModel
+# Stores User Authentication information separate from User information
+
 # Define User DataModel
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)

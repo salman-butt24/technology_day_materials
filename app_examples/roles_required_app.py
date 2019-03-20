@@ -10,38 +10,43 @@ from flask_user import roles_required
 # os.getenv() enables configuration through OS environment variables
 class ConfigClass(object):
     # Flask settings
-    SECRET_KEY =              os.getenv('SECRET_KEY',       'THIS IS AN INSECURE SECRET')
-    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL',     'sqlite:///single_file_app.sqlite')
+    SECRET_KEY = os.getenv('SECRET_KEY','THIS IS AN INSECURE SECRET')
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL','sqlite:///single_file_app.sqlite')
     CSRF_ENABLED = True
 
     # Flask-Mail settings
-    MAIL_USERNAME =           os.getenv('MAIL_USERNAME',        'email@example.com')
-    MAIL_PASSWORD =           os.getenv('MAIL_PASSWORD',        'password')
-    MAIL_DEFAULT_SENDER =     os.getenv('MAIL_DEFAULT_SENDER',  '"MyApp" <noreply@example.com>')
-    MAIL_SERVER =             os.getenv('MAIL_SERVER',          'smtp.gmail.com')
-    MAIL_PORT =           int(os.getenv('MAIL_PORT',            '465'))
-    MAIL_USE_SSL =        int(os.getenv('MAIL_USE_SSL',         True))
+    MAIL_USERNAME = os.getenv('MAIL_USERNAME','email@example.com')
+    MAIL_PASSWORD = os.getenv('MAIL_PASSWORD','password')
+    MAIL_DEFAULT_SENDER = os.getenv('MAIL_DEFAULT_SENDER','"MyApp" <noreply@example.com>')
+    MAIL_SERVER = os.getenv('MAIL_SERVER','smtp.gmail.com')
+    MAIL_PORT = int(os.getenv('MAIL_PORT','465'))
+    MAIL_USE_SSL = int(os.getenv('MAIL_USE_SSL',True))
 
     # Flask-User settings
-    USER_APP_NAME        = "AppName"                # Used by email templates
+    # Used by email templates
+    USER_APP_NAME = "AppName"
 
 
-def create_app(test_config=None):                   # For automated tests
+def create_app(test_config=None):
     # Setup Flask and read config from ConfigClass defined above
     app = Flask(__name__)
     app.config.from_object(__name__+'.ConfigClass')
 
-    # Load local_settings.py if file exists         # For automated tests
+    # For automated tests
+    # Load local_settings.py if file exists
     try: app.config.from_object('local_settings')
     except: pass
 
-    # Load optional test_config                     # For automated tests
+    # For automated tests
+    # Load optional test_config
     if test_config:
         app.config.update(test_config)
 
     # Initialize Flask extensions
-    mail = Mail(app)                                # Initialize Flask-Mail
-    db = SQLAlchemy(app)                            # Initialize Flask-SQLAlchemy
+    # Initialize Flask-Mail
+    mail = Mail(app)
+    # Initialize Flask-SQLAlchemy
+    db = SQLAlchemy(app)
 
     # Define the User data model. Make sure to add flask_user UserMixin!!
     class User(db.Model, UserMixin):
@@ -88,6 +93,8 @@ def create_app(test_config=None):                   # For automated tests
                 password=user_manager.hash_password('Password1'))
         user1.roles.append(Role(name='secret'))
         user1.roles.append(Role(name='agent'))
+
+        # Store user and roles
         db.session.add(user1)
         db.session.commit()
 
